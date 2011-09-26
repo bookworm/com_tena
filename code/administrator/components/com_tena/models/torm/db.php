@@ -98,7 +98,7 @@ class TOrmDB extends KObject implements KObjectIdentifiable
       'state'  => KFactory::tmp('lib.koowa.model.state'),
     ));
    
-   	parent::_initialize($config);
+   	parent::_initialize($config);    
   }
       
 // ------------------------------------------------------------------------

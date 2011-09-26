@@ -20,5 +20,11 @@ class ComTenaModelDefault extends TOrm
   {
     parent::__construct($config);
     $this->_state->limit = KFactory::get('lib.joomla.application')->getCfg('list_limit');
+  }
+  
+  public function _initialize(KConfig $config)
+  {      
+    parent::_initialize($config);    
+    if(defined("DEV_MODE")) $this->genSchema();	
   }   
 }
