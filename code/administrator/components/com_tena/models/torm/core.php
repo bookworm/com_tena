@@ -83,9 +83,9 @@ class TOrmCore extends TOrmDB
   * @param array  $args The arguments
   * @return mixed 
   */
-  public function __call($name, $args = null)
+  public function __call($name, $args)
   {       
-    if($this->$find_methods[$name] && !empty($args))
+    if($this->find_methods[$name] && !empty($args))
     {             
       $state = explode('_', $name);
       $this->setState($state[2], $args[0]);
@@ -95,7 +95,7 @@ class TOrmCore extends TOrmDB
       return $this->set($name, $args[0]);
     }                  
     
-    return parent::__call($method, $args);
+    return parent::__call($name, $args);
   } 
   
 // ------------------------------------------------------------------------
@@ -138,7 +138,7 @@ class TOrmCore extends TOrmDB
   	  } 
   	  else 
   	  {    
-  	    if(!isset($this->sqltypemap[strtolower($type]))) throw new KException('Non existent type'); 
+  	    if(!isset($this->sqltypemap[strtolower($type)])) throw new KException('Non existent type'); 
   	    
   	    if(is_array($this->sqltypemap[$type])) {
   	      $sql_type = $this->sqltypemap[$type]['type']; 
@@ -150,7 +150,7 @@ class TOrmCore extends TOrmDB
   	  }  
     }   
       
-    if(!isset($options['sql_options']) $sql_options = '';
+    if(!isset($options['sql_options'])) $sql_options = '';
     else $sql_options = $options['sql_options'];
     
     $this->keys[$key] = array(

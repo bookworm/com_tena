@@ -66,9 +66,9 @@ class TOrmQuery extends TOrmTable
   * @param array  $args The arguments
   * @return mixed 
   */  
-  public function __call($name, $args = null)
+  public function __call($name, $args)
   {  
-    return parent::__call();
+    return parent::__call($name, $args);
   }  
   
 // ------------------------------------------------------------------------
@@ -86,14 +86,14 @@ class TOrmQuery extends TOrmTable
       $fkey = $this->associations['many'][$name]['foreign_key']; 
       $identifier = 'admin::com.' . 'comName' . '.model.' . $this->associations['many'][$name]['class_name'];
       if(!isset($this->_children[$name])) $this->_children[$name] = KFactory::tmp($identifier)->${$fkey}($this->_state->id)->all(); 
-      return $this->_children[$name]);      
+      return $this->_children[$name];      
     }
     elseif(isset($this->associations['one'][$name])) 
     {              
       $fkey = $this->associations['one'][$name]['foreign_key']; 
       $identifier = 'admin::com.' . 'comName' . '.model.' . $this->associations['one'][$name]['class_name']; 
       if(!isset($this->_children[$name])) $this->_children[$name] = KFactory::tmp($identifier)->${$fkey}($this->_state->id)->first();       
-      return $this->_children[$name]);
+      return $this->_children[$name];
     }
     return parent::__get($name);
   }   

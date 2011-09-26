@@ -44,7 +44,7 @@ class TOrm extends TOrmQuery
    * @param array  $args The arguments
    * @return mixed Either the Field object, false, or parent::__call
    */
-  public function __call($name, $args = null)
+  public function __call($name, $args)
   {
     if(isset($this->key_objects[$name])) return $this->key_objects[$name];  
     elseif(empty($args) && isset($this->key_values[$name]))

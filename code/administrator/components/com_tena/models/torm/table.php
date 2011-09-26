@@ -29,9 +29,9 @@ class TOrmTable extends TOrmCore
    * @param array  $args The arguments
    * @return mixed 
    */
-   public function __call($name, $args = null)
+   public function __call($name, $args)
   {  
-    return parent::__call();
+    return parent::__call($name, $args);
   }  
      
 // ------------------------------------------------------------------------  

@@ -1,10 +1,10 @@
 <?php 
 
 // Requires
-require_once 'torm' . DS . 'db.php';      
+require_once 'torm' . DS . 'db.php'; 
+require_once 'torm' . DS . 'core.php';         
 require_once 'torm' . DS . 'table.php';      
 require_once 'torm' . DS . 'query.php';      
-require_once 'torm' . DS . 'core.php';    
 require_once 'torm' . DS . 'torm.php';      
 
 /**      

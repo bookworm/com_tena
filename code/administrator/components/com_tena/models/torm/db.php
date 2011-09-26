@@ -296,7 +296,7 @@ class TOrmDB extends KObject implements KObjectIdentifiable
       if(isset($key['length'])) $query .= '(' . $key['length'] . ') '; 
       $query .= $key['sql_options'] . ',';
     } 
-    $query .= ');' 
+    $query .= ');'; 
         
     $db->execute($query);
     return $this;
