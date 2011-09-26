@@ -63,9 +63,10 @@ class TOrmDB extends KObject implements KObjectIdentifiable
 	 *
 	 * @var array
 	 */
-  public $key_types_to_schema = array(
-    'string'  => 'VARCHAR',
-    'integer'  => 'INT',
+  public $sqltypemap = array(
+    'string'  => array('type' => 'VARCHAR', 'default_options' => array('length' => 255)),
+    'integer' => 'INT',
+    'int'     => 'INT'
   );
    
   /**
@@ -112,8 +113,8 @@ class TOrmDB extends KObject implements KObjectIdentifiable
 	public function getIdentifier()
 	{
 		return $this->_identifier;
-	} 
-  
+	}  
+
 // ------------------------------------------------------------------------
   
   /**

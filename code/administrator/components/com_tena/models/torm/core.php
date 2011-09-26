@@ -127,15 +127,28 @@ class TOrmCore extends TOrmDB
   */  
   public function key($key, $type, $options = array())
   {         
-    if(!isset($options['sql_type']) && isset($this->key_types_to_schema[strtolower($type]))) { 
-      $sql_type = $this->key_types_to_schema[strtolower($type])];                              
-    }
-    elseif(isset($options['sql_type'])) {    
-      $sql_type = $options['sql_type'];
-    }
-    else { 
-      $sql_type = $type;      
-    }
+    if(isset($options['sql_type'])) 
+    { 
+      $sql_type = $options['sql_type'];                            
+    }   
+    else 
+    {
+      if(isset($this->sql_types[$type])) {
+  	    $sql_type = $type;  
+  	  } 
+  	  else 
+  	  {    
+  	    if(!isset($this->sqltypemap[strtolower($type]))) throw new KException('Non existent type'); 
+  	    
+  	    if(is_array($this->sqltypemap[$type])) {
+  	      $sql_type = $this->sqltypemap[$type]['type']; 
+  	      $options = array_merge($options, $this->sqltypemap[$type]['default_options']);
+  	    }  
+  	    else {
+  	      $sql_type = $this->sqltypemap[$type];
+  	    }
+  	  }  
+    }   
       
     if(!isset($options['sql_options']) $sql_options = '';
     else $sql_options = $options['sql_options'];
