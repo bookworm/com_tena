@@ -278,9 +278,18 @@ class TOrmDB extends KObject implements KObjectIdentifiable
   { 
     $table = $this->getTable();
 		$db    = $table->getDatabase();     
+		  
+		# if(count($this->keys) == count($table->getColumns())) return $this;   
+		
+		$columns = $table->getColumns();
 		
 		$query = "CREATE TABLE IF NOT EXISTS `#__comName_$this->name` (";
-    foreach($this->keys as $k => $key) {
+		
+    foreach($this->keys as $k => $key) 
+    {   
+      if(isset($columns[$k]))
+        if($columns[$k]->type == $key['sql_type']) continue;
+        
       $query .= "`$k` ";
       $query .= $key['sql_type'];
       if(isset($key['length'])) $query .= '(' . $key['length'] . ') '; 
