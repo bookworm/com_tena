@@ -97,7 +97,7 @@ class TOrm extends TOrmQuery
    * @return mixed $this or parent::set()
    */  
   public function set($key, $value)
-  {
+  {            
     if(isset($this->key_values[$key])) { 
       $this->key_values[$key] = $value; 
       return $this;

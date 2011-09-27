@@ -7,7 +7,7 @@
  * @license   GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link      https://github.com/bookworm/com_tena
  */
-class TOrmDB extends KObject implements KObjectIdentifiable        
+abstract class TOrmDB extends KObject implements KObjectIdentifiable        
 {     
   /**
 	 * Model column data
@@ -56,8 +56,14 @@ class TOrmDB extends KObject implements KObjectIdentifiable
 	 *
 	 * @var integer
 	 */
-  protected $_total;  
+  protected $_total; 
   
+  public $sql_types = array(    
+    'BOOLEAN', 'CHAR', 'VARCHAR', 'CLOB', 'TINYINT', 'SMALLINT', 'INT',
+    'BIGINT', 'FLOAT', 'NUMERIC', 'DATETIME', 'BLOB', 'TINYTEXT', 'TEXT', 'MEDIUMTEXT', 'LONGTEXT',
+    'MEDIUMBLOB', 'LONGBLOB', 'DATE', 'TIME', 'TIMESTAMP', 'SERIAL', 'SET'
+  );   
+   
   /**
 	 * Maps key types to their actual SQL types.
 	 *
@@ -98,7 +104,7 @@ class TOrmDB extends KObject implements KObjectIdentifiable
       'state'  => KFactory::tmp('lib.koowa.model.state'),
     ));
     
-   $this->key($this->package . '_' . $this->name. '_' . 'id', 'SERIAL');
+    $this->key($this->getIdentifier()->package . '_' . $this->name. '_' . 'id', 'SERIAL');
    
    	parent::_initialize($config);    
   }

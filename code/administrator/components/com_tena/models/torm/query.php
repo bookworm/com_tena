@@ -44,16 +44,7 @@ class TOrmQuery extends TOrmTable
    * @return void
    */
   public function _initialize(KConfig $config)
-  {       	
-    $this->_state
-      ->insert('limit'    , 'int')
-      ->insert('offset'   , 'int')
-      ->insert('sort'     , 'cmd')
-      ->insert('direction', 'word', 'asc')
-      ->insert('search'   , 'string')
-      // callback state for JSONP, needs to be filtered as cmd to prevent XSS
-      ->insert('callback' , 'cmd');      
-      
+  {       	     
     parent::_initialize($config);    
   }                                      
   

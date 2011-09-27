@@ -14,7 +14,7 @@ require_once 'torm' . DS . 'torm.php';
  * @license   GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link      https://github.com/bookworm/com_tena
  */
-class ComTenaModelDefault extends TOrm
+class ComTenaModelDefault extends KModelDefault
 {
   public function __construct(KConfig $config)
   {
@@ -25,6 +25,5 @@ class ComTenaModelDefault extends TOrm
   public function _initialize(KConfig $config)
   {    
     parent::_initialize($config);    
-    if(defined("DEV_MODE")) $this->genSchema();	
   }   
 }

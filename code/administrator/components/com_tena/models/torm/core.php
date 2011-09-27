@@ -42,8 +42,8 @@ class TOrmCore extends TOrmDB
    *           
    * @var array
    **/
-  public $associations = array('one' => array(), 'many' => array());    
-  
+  public $associations = array('one' => array(), 'many' => array()); 
+    
   /**
    * Constructor
    *
@@ -70,7 +70,17 @@ class TOrmCore extends TOrmDB
    */
   public function _initialize(KConfig $config)
 	{
-    $this->name = $this->getIdentifier()->getName();      
+    $this->name = $this->getIdentifier()->name;
+            
+    # $this->_state
+    #   ->insert('limit'    , 'int')
+    #   ->insert('offset'   , 'int')
+    #   ->insert('sort'     , 'cmd')
+    #   ->insert('direction', 'word', 'asc')
+    #   ->insert('search'   , 'string')
+    #   // callback state for JSONP, needs to be filtered as cmd to prevent XSS
+    #   ->insert('callback' , 'cmd');   
+      
     parent::_initialize($config);
   }         
   
@@ -133,8 +143,8 @@ class TOrmCore extends TOrmDB
     }   
     else 
     {
-      if(isset($this->sql_types[$type])) {
-  	    $sql_type = $type;  
+      if(isset($this->sql_types[strtoupper($type)])) {
+  	    $sql_type = strtoupper($type);  
   	  } 
   	  else 
   	  {    
