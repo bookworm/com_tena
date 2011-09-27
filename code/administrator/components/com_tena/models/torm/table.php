@@ -18,7 +18,41 @@ class TOrmTable extends TOrmCore
   {
     parent::__construct($config);
     $this->_table = $config->table;
-  } 
+
+    $this->_state
+      ->insert('limit'    , 'int')
+      ->insert('offset'   , 'int')
+      ->insert('sort'     , 'cmd')
+      ->insert('direction', 'word', 'asc')
+      ->insert('search'   , 'string')
+      ->insert('callback' , 'cmd');       
+                                         
+    if($this->isConnected())
+    {
+      foreach($this->getTable()->getUniqueColumns() as $key => $column) {
+        $this->_state->insert($key, $column->filter, null, true, $this->getTable()->mapColumns($column->related, true));
+      }     
+    } 
+  }  
+  
+// ------------------------------------------------------------------------
+  
+  /**
+   * Initializes the config for the object
+   *
+   * Called from {@link __construct()} as a first step of object instantiation.
+   *
+   * @param   object  An optional KConfig object with configuration options
+   * @return  void
+   */
+  public function _initialize(KConfig $config)
+  {
+    $config->append(array(
+      'table' => $this->_identifier->name,
+    ));
+
+    parent::_initialize($config);  
+  }
   
 // ------------------------------------------------------------------------
   

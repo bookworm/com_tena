@@ -24,6 +24,22 @@ class TOrm extends TOrmQuery
   public $key_objects;   
   
   /**
+   * Initializes the config for the object
+   *
+   * Called from {@link __construct()} as a first step of object instantiation.
+   *
+   * @param  object An optional KConfig object with configuration options
+   * @return void
+   */   
+  public function __initialize($value='')
+  {
+    $this->key($this->getIdentifier()->package . '_' . $this->name. '_' . 'id', 'SERIAL');
+    parent::_initialize($config);    
+  }  
+  
+// ------------------------------------------------------------------------   
+  
+  /**
    * __get() overload for getting keys.
    *     
    * @param bool $name Name of the property to get.
@@ -33,7 +49,7 @@ class TOrm extends TOrmQuery
   { 
     if(isset($this->key_values[$name])) return $this->key_values[$name];
     else return parent::__get($name);
-  } 
+  }  
   
 // ------------------------------------------------------------------------
   
@@ -98,7 +114,6 @@ class TOrm extends TOrmQuery
    */  
   public function set($key, $value = null)
   {   
-    file_put_contents('making.txt', 'making my setting way');         
     if(isset($this->key_values[$key])) { 
       $this->key_values[$key] = $value; 
       return $this;

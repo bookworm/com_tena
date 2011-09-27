@@ -103,9 +103,7 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
   	$config->append(array(
       'state'  => KFactory::tmp('lib.koowa.model.state'),
     ));
-    
-    # $this->key($this->getIdentifier()->package . '_' . $this->name. '_' . 'id', 'SERIAL');
-   
+       
    	parent::_initialize($config);    
   }
       
@@ -286,9 +284,7 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
   { 
     $table = $this->getTable();
 		$db    = $table->getDatabase();     
-		  
-		# if(count($this->keys) == count($table->getColumns())) return $this;   
-		
+		  		
 		$columns = $table->getColumns();
 		
 		$query = "CREATE TABLE IF NOT EXISTS `#__comName_$this->name` (";

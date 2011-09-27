@@ -44,7 +44,7 @@ class TOrmQuery extends TOrmTable
    * @return void
    */
   public function _initialize(KConfig $config)
-  {       	     
+  {       	          
     parent::_initialize($config);    
   }                                      
   

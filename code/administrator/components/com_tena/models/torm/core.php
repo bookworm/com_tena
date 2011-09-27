@@ -55,7 +55,7 @@ class TOrmCore extends TOrmDB
 
 		parent::__construct($config);
 
-    $this->_initialize();
+    $this->_initialize($config);
   }      
        
 // ------------------------------------------------------------------------
@@ -71,16 +71,6 @@ class TOrmCore extends TOrmDB
   public function _initialize(KConfig $config)
 	{
     $this->name = $this->getIdentifier()->name;
-            
-    # $this->_state
-    #   ->insert('limit'    , 'int')
-    #   ->insert('offset'   , 'int')
-    #   ->insert('sort'     , 'cmd')
-    #   ->insert('direction', 'word', 'asc')
-    #   ->insert('search'   , 'string')
-    #   // callback state for JSONP, needs to be filtered as cmd to prevent XSS
-    #   ->insert('callback' , 'cmd');   
-      
     parent::_initialize($config);
   }         
   
