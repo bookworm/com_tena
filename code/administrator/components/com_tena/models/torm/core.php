@@ -85,7 +85,7 @@ class TOrmCore extends TOrmDB
   */
   public function __call($name, $args)
   {       
-    if($this->find_methods[$name] && !empty($args))
+    if(isset($this->find_methods[$name]) && !empty($args))
     {             
       $state = explode('_', $name);
       $this->setState($state[2], $args[0]);
