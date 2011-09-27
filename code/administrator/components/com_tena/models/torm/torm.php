@@ -96,8 +96,9 @@ class TOrm extends TOrmQuery
    * @param mixed  $value The key's value.         
    * @return mixed $this or parent::set()
    */  
-  public function set($key, $value)
-  {            
+  public function set($key, $value = null)
+  {   
+    file_put_contents('making.txt', 'making my setting way');         
     if(isset($this->key_values[$key])) { 
       $this->key_values[$key] = $value; 
       return $this;

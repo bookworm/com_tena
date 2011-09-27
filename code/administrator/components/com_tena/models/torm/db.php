@@ -104,7 +104,7 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
       'state'  => KFactory::tmp('lib.koowa.model.state'),
     ));
     
-    $this->key($this->getIdentifier()->package . '_' . $this->name. '_' . 'id', 'SERIAL');
+    # $this->key($this->getIdentifier()->package . '_' . $this->name. '_' . 'id', 'SERIAL');
    
    	parent::_initialize($config);    
   }
