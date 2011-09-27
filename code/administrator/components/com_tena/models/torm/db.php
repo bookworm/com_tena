@@ -78,7 +78,6 @@ class TOrmDB extends KObject implements KObjectIdentifiable
 	{
     if(!isset($config)) $config = new KConfig();    
     
-    $this->key($this->package . '_' . $this->name. '_' . 'id', 'SERIAL');
     parent::__construct($config);   
     $this->_state = $config->state;  
 	}  
@@ -98,6 +97,8 @@ class TOrmDB extends KObject implements KObjectIdentifiable
   	$config->append(array(
       'state'  => KFactory::tmp('lib.koowa.model.state'),
     ));
+    
+   $this->key($this->package . '_' . $this->name. '_' . 'id', 'SERIAL');
    
    	parent::_initialize($config);    
   }
