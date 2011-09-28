@@ -70,9 +70,10 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
 	 * @var array
 	 */
   public $sqltypemap = array(
-    'string'  => array('type' => 'VARCHAR', 'default_options' => array('length' => 255)),
-    'integer' => 'INT',
-    'int'     => 'INT'
+    'string'      => array('type' => 'VARCHAR', 'default_options' => array('sql_args' => 255)), 
+    'foreign_key' => 'FOREIGN KEY',
+    'integer'     => 'INT',
+    'int'         => 'INT'
   );
    
   /**
@@ -287,16 +288,16 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
 		  		
 		$columns = $table->getColumns();
 		
-		$query = "CREATE TABLE IF NOT EXISTS `#__comName_$this->name` (";
+		$query = "CREATE TABLE IF NOT EXISTS `#__" . $this->getIdentifier()->package . "_$this->name` (";
 		
     foreach($this->keys as $k => $key) 
     {   
       if(isset($columns[$k]))
-        if($columns[$k]->type == $key['sql_type']) continue;
-        
+        if($columns[$k]->type == $key['sql_type']) continue; 
+      
       $query .= "`$k` ";
       $query .= $key['sql_type'];
-      if(isset($key['length'])) $query .= '(' . $key['length'] . ') '; 
+      if(isset($key['sql_args'])) $query .= '(' . $key['sql_args'] . ') '; 
       $query .= $key['sql_options'] . ',';
     } 
     $query .= ');'; 

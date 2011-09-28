@@ -148,17 +148,26 @@ class TOrmCore extends TOrmDB
   	      $sql_type = $this->sqltypemap[$type];
   	    }
   	  }  
-    }   
-      
-    if(!isset($options['sql_options'])) $sql_options = '';
-    else $sql_options = $options['sql_options'];
+    }    
     
+    if($sql_type == 'foreign_key' && !isset($options['sql_options'])) {
+      $options['sql_args']    = $name;
+      $options['sql_options'] = 'REFERENCES ' . str_replace($name, '_id', '') . '(id)';
+    } 
+      
+    if(!isset($options['sql_options'])) $sql_options = '';  
+    else $sql_options = $options['sql_options'];     
+    
+    if(!isset($options['sql_args'])) $sql_args = '';  
+    else $sql_args = $options['sql_args'];  
+
     $this->keys[$key] = array(
       'key'          => $key,
        $type         => 'type', 
        'options'     => $options,  
        'sql_type'    => $sql_type, 
-       'sql_options' => $sql_options
+       'sql_options' => $sql_options,
+       'sql_args'    => $sql_args
      );   
     if(!isset($options['state'])) $this->addFindMethod($state);  
     return $this;
@@ -268,7 +277,7 @@ class TOrmCore extends TOrmDB
   public function __get($name)
   {
     if($name == 'id') {
-      return $this->key_values[$this->package . '_' . $this->name. '_' . 'id'];
+      return $this->key_values[$this->getIdentifier()->package . '_' . $this->name. '_' . 'id'];
     } 
     return parent::__get($name);
   }
