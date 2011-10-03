@@ -34,7 +34,7 @@ class TOrm extends TOrmQuery
   public function __initialize($value='')
   {
     $this->key($this->getIdentifier()->package . '_' . $this->name. '_' . 'id', 'SERIAL');
-    parent::_initialize($config);    
+    parent::_initialize($config);       
   }  
   
 // ------------------------------------------------------------------------   

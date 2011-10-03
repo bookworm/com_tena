@@ -24,7 +24,8 @@ class ComTenaModelDefault extends TORm
   
   public function _initialize(KConfig $config)
   {    
-    parent::_initialize($config);
-    if(defined("DEV_MODE")) $this->genSchema();  
+    parent::_initialize($config);    
+    
+    # if(defined("DEV_MODE")) $this->genSchema();  
   }  
 }  

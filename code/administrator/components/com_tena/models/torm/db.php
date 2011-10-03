@@ -21,7 +21,7 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
 	 *
 	 * @var mixed
 	 */
-	protected $_table;     
+   public $_table = false;     
 	
 	/**
 	 * Model state
@@ -103,8 +103,8 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
 	{                                   
   	$config->append(array(
       'state'  => KFactory::tmp('lib.koowa.model.state'),
-    ));
-       
+    ));   
+    
    	parent::_initialize($config);    
   }
       
@@ -148,72 +148,6 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
     return $this;  
   }    
   
-// ------------------------------------------------------------------------
-  
-  /**
-   * Method to get a table object
-   * 
-   * Function catches KDatabaseTableExceptions that are thrown for tables that 
-   * don't exist. If no table object can be created the function will return FALSE.
-   *
-   * @return KDatabaseTableAbstract
-   */
-  public function getTable()
-  {
-    if($this->_table !== false)
-    {
-      if(!($this->_table instanceof KDatabaseTableAbstract))
-      {   		        
-        //Make sure we have a table identifier
-        if(!($this->_table instanceof KIdentifier)) {
-          $this->setTable($this->_table);
-        }       
-
-        try {
-          $this->_table = KFactory::get($this->_table);
-        } 
-        catch (KDatabaseTableException $e) {
-          $this->_table = false;
-        }      
-      }  
-    }
-
-    return $this->_table;     
-  }
-  
-// ------------------------------------------------------------------------
-  
-  /**
-   * Method to set a table object attached to the model
-   *
-   * @param  mixed An object that implements KObjectIdentifiable, an object that
-   *                Implements KIdentifierInterface or valid identifier string
-   * @throws KDatabaseRowsetException    If the identifier is not a table identifier
-   * @return KModelTable
-   */
-  public function setTable($table)
-	{
-    if(!($table instanceof KDatabaseTableAbstract))
-    {
-      if(is_string($table) && strpos($table, '.') === false ) {
-        $identifier         = clone $this->_identifier;
-        $identifier->path   = array('database', 'table');
-        $identifier->name   = KInflector::tableize($table);
-      }
-      else  $identifier = KFactory::identify($table);
-
-      if($identifier->path[1] != 'table') {
-        throw new KDatabaseRowsetException('Identifier: '.$identifier.' is not a table identifier');
-      }
-
-      $table = $identifier;  
-    }
-
-    $this->_table = $table;
-
-    return $this;    
-	} 
-	 
 // ------------------------------------------------------------------------
 	
 	/**
@@ -282,10 +216,10 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
    * @return $this
    */
   public function genSchema()
-  { 
-    $table = $this->getTable();
-		$db    = $table->getDatabase();     
-		  		
+  {           
+    $table = $this->getTable();       
+		$db    = $table->getDatabase();  
+ 		
 		$columns = $table->getColumns();
 		
 		$query = "CREATE TABLE IF NOT EXISTS `#__" . $this->getIdentifier()->package . "_$this->name` (";
@@ -301,8 +235,10 @@ abstract class TOrmDB extends KObject implements KObjectIdentifiable
       $query .= $key['sql_options'] . ',';
     } 
     $query .= ');'; 
+    
+    file_put_contents('query.txt', $query);
         
-    $db->execute($query);
+    # $db->execute($query);
     return $this;
   } 
 }

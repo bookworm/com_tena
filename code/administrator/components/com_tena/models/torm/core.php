@@ -169,7 +169,7 @@ class TOrmCore extends TOrmDB
        'sql_options' => $sql_options,
        'sql_args'    => $sql_args
      );   
-    if(!isset($options['state'])) $this->addFindMethod($state);  
+    if(!isset($options['state'])) $this->addFindMethod($key);  
     return $this;
   }  
    
@@ -241,7 +241,7 @@ class TOrmCore extends TOrmDB
    */
   public function addFindMethod($name)
   {
-    $this->find_methods[] = 'find'.'_'.'by'.$name; 
+    $this->find_methods[] = 'find'.'_'.'by'.$name;       
     return $this;
   } 
    
@@ -279,6 +279,6 @@ class TOrmCore extends TOrmDB
     if($name == 'id') {
       return $this->key_values[$this->getIdentifier()->package . '_' . $this->name. '_' . 'id'];
     } 
-    return parent::__get($name);
+    return false;
   }
 }
